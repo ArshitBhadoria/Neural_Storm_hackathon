@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TruthScan Audio Test</title>
+    <style>
+        body {
+            background: #080b14;
+            color: white;
+            font-family: Arial;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+        }
+
+        .box {
+            background: #151b2b;
+            padding: 35px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+        }
+
+        button {
+            background: #ff5733;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        pre {
+            text-align: left;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>TRUTHSCAN AI</h1>
+        <h3>Audio Detection Test</h3>
+
+        <input type="file" id="audioFile" accept="audio/*">
+
+        <br>
+
+        <button onclick="analyzeAudio()">
+            Analyze Audio
+        </button>
+
+        <h3>Result</h3>
+        <pre id="result">Waiting for audio...</pre>
+    </div>
+
+    <script>
+        async function analyzeAudio() {
+            const file = document.getElementById("audioFile").files[0];
+            const result = document.getElementById("result");
+
+            if (!file) {
+                result.textContent = "Please select an audio file first.";
+                return;
+            }
+
+            result.textContent = "Analyzing audio... Please wait.";
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/detect/audio",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+                const data = await response.json();
+
+                result.textContent = JSON.stringify(data, null, 2);
+
+            } catch (error) {
+                result.textContent = "Error: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
