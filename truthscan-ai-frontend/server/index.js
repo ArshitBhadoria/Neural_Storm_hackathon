@@ -17,6 +17,14 @@ app.use(cors());
 app.use(express.json({ limit: "2mb" }));
 
 // ==========================================
+// ROOT ROUTE
+// ==========================================
+
+app.get("/", (req, res) => {
+  res.send("TRUTHSCAN AI Backend is running successfully!");
+});
+
+// ==========================================
 // MODEL CONFIGURATION
 // ==========================================
 
@@ -288,7 +296,9 @@ app.post(
       await safelyRemove(uploadPath);
     }
   }
-);// ==========================================
+);
+
+// ==========================================
 // VIDEO DETECTION
 // ==========================================
 
@@ -562,7 +572,9 @@ app.post(
             "The audio model returned unrecognized labels. Check its output before interpreting the result.",
           rawPredictions: segmentResults[0].predictions,
         });
-      }      // Normalize each segment and use the median to reduce the influence
+      }
+
+      // Normalize each segment and use the median to reduce the influence
       // of one unusually noisy or unusual segment.
       const spoofScores = validSegments
         .map((segment) => {
