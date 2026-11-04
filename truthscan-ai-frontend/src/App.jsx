@@ -45,7 +45,7 @@ import {
 import WelcomeScreen from "./WelcomeScreen";
 import "./styles.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://neural-storm-hackathon-2.onrender.com";
 const STORAGE_KEY = "truthscan-reports";
 
 const IMAGE_TYPES = [
